@@ -1,3 +1,3 @@
 const kAppTitle = "Mukthi";
 
-const kSplashDelay = 100;
+const kSplashDelay = 5;
