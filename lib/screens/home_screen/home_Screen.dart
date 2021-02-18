@@ -1,8 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flashy_tab_bar/flashy_tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_greetings/flutter_greetings.dart';
+import 'package:mukthi/models/promotion_model.dart';
+import 'package:mukthi/services/promotions_service.dart';
+import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import '../../constants/colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -112,50 +117,78 @@ class PromotionSliderSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(16.0),
-      child: CarouselSlider.builder(
-        itemCount: 15,
-        itemBuilder: (_, itemIndex, l) {
+    return FutureBuilder(
+      future: Provider.of<PromotionsService>(context, listen: false)
+          .fetchPromotions(),
+      builder: (_, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting)
           return ClipRRect(
             borderRadius: BorderRadius.circular(16.0),
             child: AspectRatio(
               aspectRatio: 364 / 176,
-              child: Stack(
-                children: [
-                  Container(
-                    color: kSecondaryColor,
-                  ),
-                  Positioned(
-                    bottom: 0.0,
-                    right: 0.0,
-                    child: Container(
-                      height: 74.0,
-                      width: 74.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(74.0),
-                        ),
-                        color: kAccentColor,
-                      ),
-                    ),
-                  ),
-                ],
+              child: Shimmer.fromColors(
+                child: Container(),
+                baseColor: Colors.grey[300],
+                highlightColor: Colors.grey[100],
               ),
             ),
           );
-        },
-        options: CarouselOptions(
-          autoPlay: true,
-          enlargeCenterPage: true,
-          viewportFraction: 1.0,
-          initialPage: 2,
-          enableInfiniteScroll: true,
-        ),
-      ),
+
+        final List<PromotionModel> _promotions =
+            Provider.of<PromotionsService>(context).getPromotions;
+        if (_promotions.isEmpty) return Container();
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(16.0),
+          child: CarouselSlider.builder(
+            itemCount: _promotions.length,
+            itemBuilder: (_, index, __) {
+              final _promotion = _promotions[index];
+              return ClipRRect(
+                key: Key(_promotion.id),
+                borderRadius: BorderRadius.circular(16.0),
+                child: AspectRatio(
+                  aspectRatio: 364 / 176,
+                  child: Stack(
+                    children: [
+                      Container(
+                        color: kSecondaryColor,
+                        child: FancyShimmerImage(
+                          width: double.infinity,
+                          imageUrl: _promotion.imageUrl,
+                          boxFit: BoxFit.cover,
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 0.0,
+                        right: 0.0,
+                        child: Container(
+                          height: 74.0,
+                          width: 74.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(74.0),
+                            ),
+                            color: Color(
+                              int.parse(_promotion.accentColor),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+            options: CarouselOptions(
+              autoPlay: true,
+              enlargeCenterPage: true,
+              viewportFraction: 1.0,
+              initialPage: 2,
+              enableInfiniteScroll: true,
+            ),
+          ),
+        );
+      },
     );
   }
 }
-
-
-

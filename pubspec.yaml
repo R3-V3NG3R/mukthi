@@ -20,6 +20,8 @@ dependencies:
   carousel_slider: ^3.0.0
   flashy_tab_bar: ^0.0.3
   auto_size_text: ^2.1.0
+  shimmer: ^1.1.2
+  fancy_shimmer_image: ^1.2.0
 
 dev_dependencies:
   flutter_test:
