@@ -17,8 +17,9 @@ dependencies:
   google_fonts: ^1.1.2
   avatar_glow: ^1.2.0
   flutter_greetings: ^1.0.1
-  carousel_pro: ^1.0.0
+  carousel_slider: ^3.0.0
   flashy_tab_bar: ^0.0.3
+  auto_size_text: ^2.1.0
 
 dev_dependencies:
   flutter_test:
