@@ -135,7 +135,7 @@ class PromotionSliderSection extends StatelessWidget {
           );
 
         final List<PromotionModel> _promotions =
-            Provider.of<PromotionsService>(context).getPromotions;
+            Provider.of<PromotionsService>(context,listen: false).getPromotions;
         if (_promotions.isEmpty) return Container();
         return ClipRRect(
           borderRadius: BorderRadius.circular(16.0),

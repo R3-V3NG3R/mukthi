@@ -46,6 +46,5 @@ class PromotionsService with ChangeNotifier {
         destination: "later",
       ),
     ];
-    if (_promotions.isNotEmpty) notifyListeners();
   }
 }
