@@ -9,7 +9,7 @@ class ItemsService with ChangeNotifier {
   Future<void> fetchAndSetRecommendations() async {
     this._recommendedItems = [
       ItemModel(
-        title: "Hello",
+        title: "Hello World God",
         id: "0",
         description: "description",
         image:
@@ -71,5 +71,6 @@ class ItemsService with ChangeNotifier {
         likes: 20,
       ),
     ];
+    notifyListeners();
   }
 }

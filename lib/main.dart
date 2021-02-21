@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mukthi/models/item_model.dart';
+import 'package:mukthi/services/items_service.dart';
 import 'package:mukthi/services/promotions_service.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +21,9 @@ class RootApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(
           value: PromotionsService(),
+        ),
+        ChangeNotifierProvider.value(
+          value: ItemsService(),
         ),
       ],
       child: MaterialApp(

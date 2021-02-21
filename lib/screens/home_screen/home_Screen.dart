@@ -2,10 +2,13 @@ import 'package:flashy_tab_bar/flashy_tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_greetings/flutter_greetings.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants/colors.dart';
 import './components/promotion_slider_section.dart';
 import './components/title_widget.dart';
+import './components/recommendation_widget.dart';
+import '../../services/items_service.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = "/home-screen";
@@ -19,6 +22,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<ItemsService>(context, listen: false)
+        .fetchAndSetRecommendations();
     return Scaffold(
       appBar: _appBar(),
       body: SingleChildScrollView(
@@ -29,6 +34,9 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               PromotionSliderSection(),
               TitleWidget("Recommended"),
+              RecommendationWidget(),
+              TitleWidget(""),
+              RecommendationWidget(),
             ],
           ),
         ),
